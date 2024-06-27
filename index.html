@@ -22,6 +22,17 @@
             text-shadow: 1px 1px 2px black;
         }
 
+        h1, p, p1, button {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: transform 0.5s, opacity 0.5s;
+        }
+
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         h1 {
             margin: 0;
             padding: 10px;
@@ -31,9 +42,15 @@
         p {
             margin: 10px 0;
             padding: 10px;
-            font-size: 1.2em;
+            font-size: 25px;
+            text-align: center;
         }
-
+        p1 {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 20px;
+            text-align: center;
+        }
         button {
             margin-top: 20px;
             padding: 10px 20px;
@@ -51,34 +68,41 @@
         }
 
         #button2 {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1em;
-            border: none;
-            border-radius: 5px;
+            margin-top: 10px;
             background-color: rgba(255, 255, 255, 0.8);
             color: black;
             cursor: pointer;
             transition: background-color 0.3s;
-            position: fixed;
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%);
+            position: absolute;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <h1>Museu das boas memórias</h1>
-    <p>Bem-vinda ao meu grande museu inaugurado por <b>EU MESMO</b>. Você acredita, em? em? em?</p>
-    <button onclick="openNewTab()">Visitar o Museu?</button>
     
-    <button id="button2">Não</button>
+    <h1 class="animated-element">Museu das memórias</h1>
+    <p class="animated-element">Bem-vinda ao meu grande museu inaugurado por <b>EU MESMO</b>. Você acredita, em? em? emkkkkk?</p>
+        
+    <p1 class="animated-element"> Essa <b>espécie</b> de museu, que, por mais incrível que pareça, tem a <b>GRANDESSÍSSIMA</b> finalidade de ser um museukk <i>(eu si divirto).</i> <br>
+  <b>Também</b> conta com diversas "paradas" <i>(duas)</i>. Essas paradas, que tem a intenção proposital de <b>relembrar</b> <i>(você eu acho?)</i>, <br>
+    de momentos que a vida um dia nos proporcionou. Querendo ou não, não há como relembrar o "para sempre" 
+    <i> (sério? Então por que você fez um museu?)</i><br> mas, no final do dia, como já diria um ser humano por ai, "As memórias estarão para sempre conosco."
+    </p1>
+    
+    
+    <button id="button1" class="animated-element" onclick="openNewTab()">Quer Visitar a Parede das Recordações?</button>
+    <button id="button2" class="animated-element">Não quero</button>
     
     <script>
         function moveButton2() {
             const button2 = document.getElementById("button2");
-            const novaPosicaoTop = Math.random() * window.innerHeight; 
-            const novaPosicaoLeft = Math.random() * window.innerWidth; 
+            const maxHeight = window.innerHeight - button2.clientHeight;
+            const maxWidth = window.innerWidth - button2.clientWidth;
+            const novaPosicaoTop = Math.random() * maxHeight;
+            const novaPosicaoLeft = Math.random() * maxWidth;
 
             button2.style.top = novaPosicaoTop + "px";
             button2.style.left = novaPosicaoLeft + "px";
@@ -89,6 +113,25 @@
         function openNewTab() {
             window.open('https://nicolasses.github.io/Recorda-es-do-Museu/', '_blank'); 
         }
+
+        const button1 = document.getElementById("button1");
+        const button2 = document.getElementById("button2");
+        function positionButton2() {
+            button2.style.top = (button1.offsetTop + button1.offsetHeight + 20) + 'px';
+            button2.style.left = (button1.offsetLeft + (button1.offsetWidth / 2) - (button2.offsetWidth / 2)) + 'px';
+        }
+
+        window.onload = function() {
+            positionButton2();
+            const elements = document.querySelectorAll('.animated-element');
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('visible');
+                }, index * 400);
+            });
+        };
+     
+        window.onresize = positionButton2;
     </script>
 </body>
 </html>
